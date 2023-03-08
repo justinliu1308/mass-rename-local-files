@@ -1,28 +1,43 @@
 import os
 import re
+from preview_output import preview_new_filenames
 
-path = r"C:\Users\justi\Desktop\Python\rename-python-files\old-filenames"
+path = r"C:\Users\justi\Desktop\Python\mass_rename_local_files\old_filenames"
 old_filenames = os.listdir(path)
-new_filenames = []
 
-# Creating new list of new filenames
-for name in old_filenames:
-    if '_' in name:         # filename is snake_case
-        name = name.replace("_", " ")    
-    elif '_' not in name:   # filename is UpperCamelCase
-        name = re.sub(r"(\w)([A-Z])", r"\1 \2", name)
-        # adds space before each capital letter only if preceeding letter is lowercase
-            # changes PhaseTwo to Phase Two
-            # changes PhaseII to Phase II and not Phase I I
-    else:                   # filename format uncertain
-        print(f'The filename "{name}" was not modified due to naming convention not recognized by this program.')
-    new_filenames.append(name)
+def generate_new_filenames(old_filenames):
+    # Creates list of new filenames
+    new_filenames = []
+    for name in old_filenames:
+        # If filename is snake_case
+        if '_' in name:         
+            name = name.replace("_", " ")    
+        # If filename is UpperCamelCase
+        elif '_' not in name and '-' not in name:
+            name = re.sub(r"(\w)([A-Z])", r"\1 \2", name)
+            # adds space before each capital letter ONLY if preceeding letter is lowercase
+                # changes 'PhaseTwo' to 'Phase Two'
+                # changes 'PhaseII' to 'Phase II' and not 'Phase I I'
+        # Filename format uncertain
+        else:
+            name = 'no_change'
+        new_filenames.append(name)
+    return new_filenames
 
-# old filename:
-print(old_filenames)
-# new filename: 
-print(new_filenames)
-
-# Renaming each file in path
-# for i in range(len(old_filenames)):
-#     os.rename(old_filenames[i], new_filenames[i])
+def rename_files(old_filenames, new_filenames):
+    # Renaming each file in path
+    for i in range(len(old_filenames)):
+        if new_filenames[i] == 'no_change':
+            continue
+        else:
+            os.rename(old_filenames[i], new_filenames[i])
+                 
+if __name__ == "__main__":
+    new_filenames = generate_new_filenames(old_filenames)
+    action, count = preview_new_filenames(old_filenames, new_filenames)
+    if action == True:
+        rename_files(old_filenames, new_filenames)
+        if count == 1:
+            print(f'{count} file renamed.')
+        else:
+            print(f'{count} files renamed.')
