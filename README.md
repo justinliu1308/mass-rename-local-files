@@ -23,3 +23,6 @@ To search for a camel-case-named file successfully, you need to remember the sta
 
 Otherwise, the search fails:
 ![alt text](https://github.com/justinliu1308/rename-python-files/blob/main/failed-search-1.png)
+
+## Example: Before and After
+![alt text](https://github.com/justinliu1308/mass_rename_local_files/blob/main/filename-before-and-after.png)
