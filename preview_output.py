@@ -1,4 +1,4 @@
-# Lists out the before and after filenames for the user to review before files are actually renamed:
+# Lists out the before and after filenames for the user to review before files are actually renamed
 
 def preview_new_filenames(old_filenames, new_filenames):
     count = 0

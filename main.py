@@ -25,7 +25,7 @@ def generate_new_filenames(old_filenames):
     return new_filenames
 
 def rename_files(old_filenames, new_filenames):
-    # Renaming each file in path
+    # Renames each file in path
     for i in range(len(old_filenames)):
         if new_filenames[i] == 'no_change':
             continue
@@ -34,9 +34,11 @@ def rename_files(old_filenames, new_filenames):
                  
 if __name__ == "__main__":
     new_filenames = generate_new_filenames(old_filenames)
+    # Calls preview_output.py to shows preview and wait for user acknowledgement
     action, count = preview_new_filenames(old_filenames, new_filenames)
     if action == True:
         rename_files(old_filenames, new_filenames)
+        # Prints confirmation message after actions completed
         if count == 1:
             print(f'{count} file renamed.')
         else:
